@@ -1,0 +1,39 @@
+apply plugin: 'groovy'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+    }
+}
+
+version = '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile localGroovy()
+    compile 'org.codehaus.groovy:groovy-all:2.3.6'
+    compile 'org.apache.hadoop:hadoop-common:+'
+    compile "org.apache.hive:hive-exec:0.10.0"
+    compile "org.apache.hive:hive-jdbc:0.11.0"
+    testCompile 'junit:junit:4.11'
+}
+
+// http://java.dzone.com/articles/gradle-goodness-running-groovy
+task runScript(type: JavaExec) {
+    description 'Run Groovy script'
+
+    // Set main property to name of Groovy script class.
+    main = 'HiveJDBCSample'
+
+    // Set classpath for running the Groovy script.
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+defaultTasks 'runScript'
